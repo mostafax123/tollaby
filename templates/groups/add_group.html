@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="form-container" id="groupForm">
+        <h2>إضافة مجموعة جديدة</h2>
+        <form id="addGroupForm" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    {{ form.grade.label_tag }}
+                    {{ form.grade }}
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">إضافة المجموعة</button>
+                <a href="{% url 'groups' %}" class="btn btn-secondary" id="cancelGroupForm">إلغاء</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

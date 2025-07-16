@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block content %}
+<!-- Payments Section -->
+<section id="payments" class="content-section active">
+    <div class="section-header">
+        <h1>إدارة المدفوعات</h1>
+    </div>
+    <!-- Payments List -->
+    <div class="table-container">
+        <div class="table-header">
+            <h3>تقرير المدفوعات</h3>
+            <div class="filter-controls">
+                <button class="btn btn-secondary" id="printPayments">
+                    <i class="fas fa-print"></i>
+                    طباعة
+                </button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table" id="paymentsTable">
+                <thead>
+                    <tr>
+                        <th>الطالب</th>
+                        <th>المبلغ المستحق</th>
+                        <th>المبلغ المدفوع</th>
+                        <th>المتبقي</th>
+                        <th>آخر دفعة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentsTableBody">
+                    {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.student__name }}</td>
+                            <td>{{ payment.amount_due }} ج.م</td>
+                            <td>{{ payment.amount_paid }} ج.م</td>
+                            <td>{{ payment.amount_due|sub:payment.amount_paid }} ج.م</td>
+                            <td>{{ payment.last_payment }} ج.م</td>
+                            <td>
+                                <a href="{% url 'add_payment' payment.student_id %}" class="btn btn-success" id="addPaymentBtn">
+                                    <i class="fas fa-plus"></i>
+                                    إضافة دفعة
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const printPaymentsBtn = document.getElementById('printPayments');
+        if (printPaymentsBtn) {
+            printPaymentsBtn.addEventListener('click', function() {
+                window.location.href = "{% url 'download_payments_csv' %}";
+            });
+        }
+    });
+</script>
+{% endblock %}

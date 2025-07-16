@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Sessions Section -->
+<section id="sessions" class="content-section active">
+    <div class="section-header">
+        <h1>إدارة الحصص</h1>
+        <a href="{% url 'add_session' %}" class="btn btn-primary" id="addSessionBtn">
+            <i class="fas fa-plus"></i>
+            إضافة حصة جديدة
+        </a>
+    </div>
+
+    <!-- Sessions List -->
+    <div class="table-container">
+        <div class="table-header">
+            <h3>قائمة الحصص</h3>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table" id="sessionsTable">
+                <thead>
+                    <tr>
+                        <th>العنوان</th>
+                        <th>المدة</th>
+                        <th>الصف</th>
+                        <th>السعر</th>
+                        <th>المجموعة</th>
+                        <th>التاريخ</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="sessionsTableBody">
+                    {% for session in sessions %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'attendance' session.id %}" class="nav-link btn">
+                                    {{ session.title }}
+                                </a>
+                            </td>
+                            <td>{{ session.duration }}</td>
+                            <td>{{ session.group__grade }}</td>
+                            <td>{{ session.price }}ج.م </td>
+                            <td>{{ session.group__name }}</td>
+                            <td>{{ session.date }}</td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <a href="{% url 'edit_session' session.id %}" class="btn btn-primary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <form method="POST" action="{% url 'delete_session' session.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

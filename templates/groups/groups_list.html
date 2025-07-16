@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Groups Section -->
+<section id="groups" class="content-section active">
+    <div class="section-header">
+        <h1>إدارة المجموعات</h1>
+        <a href="{% url 'add_group' %}" class="btn btn-primary" id="addGroupBtn">
+            <i class="fas fa-plus"></i>
+            إضافة مجموعة جديدة
+        </a>
+    </div>
+    <!-- Groups List -->
+    <div class="table-container">
+        <div class="table-header">
+            <h3>قائمة المجموعات</h3>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table" id="groupsTable">
+                <thead>
+                    <tr>
+                        <th>اسم المجموعة</th>
+                        <th>الصف</th>
+                        <th>عدد الطلاب</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="groupsTableBody">
+                    {% for group, count in groups %}
+                        <tr>
+                            <td>{{ group.name }}</td>
+                            <td>{{ group.grade }}</td>
+                            <td>{{ count.students_count }}</td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <a href="{% url 'edit_group' group.id %}" class="btn btn-primary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <form method="POST" action="{% url 'delete_group' group.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

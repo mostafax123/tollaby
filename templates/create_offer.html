@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="create-offer" class="content-section active">
+    <div class="section-header">
+        <h1>إضافة عرض/خصم جديد</h1>
+    </div>
+    <div class="form-container">
+        <form method="post" action="{% url 'create_offer' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="offerName">اسم العرض</label>
+                    <input type="text" id="offerName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="offerDiscount">نسبة الخصم (%)</label>
+                    <input type="number" id="offerDiscount" name="discount" min="0" max="100" required>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">إضافة العرض</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

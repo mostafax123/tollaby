@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Edit Student Section -->
+<section id="editStudent" class="content-section active">
+    <div class="section-header">
+        <div>
+            <div style="display: flex; align-items: center; margin-bottom: 10px; color: var(--text-secondary);">
+                <a href="{% url 'students' %}" style="color: var(--primary-color); text-decoration: none;">الطلاب</a>
+                <span style="margin: 0 8px;"> / </span>
+                <span>تعديل الطالب</span>
+            </div>
+            <h1>تعديل بيانات الطالب: {{ form.instance.name }}</h1>
+            <p>قم بتعديل بيانات الطالب في النموذج أدناه</p>
+        </div>
+    </div>
+    <div class="form-container" id="editStudentForm" style="border-top: 4px solid var(--primary-color); box-shadow: var(--shadow-lg);">
+        <h2>تعديل بيانات الطالب</h2>
+
+        <form id="editStudentForm" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.sex.label_tag }}
+                    {{ form.sex }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.group.label_tag }}
+                    {{ form.group }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.offer.label_tag }}
+                    {{ form.offer }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                <a href="{% url 'students' %}" class="btn btn-secondary" id="cancelEditForm">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

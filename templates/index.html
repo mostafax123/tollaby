@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Dashboard Section -->
+<section id="dashboard" class="content-section active">
+    <div class="section-header">
+        <h1>لوحة التحكم</h1>
+        <p>نظرة عامة على نظام إدارة الطلاب</p>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="totalStudents">{{ no_students }}</h3>
+                <p>إجمالي الطلاب</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="totalGroups">{{ no_groups }}</h3>
+                <p>إجمالي المجموعات</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="totalSessions">{{ no_sessions }}</h3>
+                <p>إجمالي الحصص</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="totalRevenue">{% if revenue.amount_paid__sum == None %}0 ج.م{% else %}{{ revenue.amount_paid__sum }}{% endif %}</h3>
+                <p>إجمالي الإيرادات</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

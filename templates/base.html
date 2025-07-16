@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلابي - نظام إدارة الطلاب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href={% static "css/main.css" %}>
+    <link rel="stylesheet" href={% static "css/components.css" %}>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i class="fas fa-ellipsis-h"></i>
+    </button>
+
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src={% static "images/logo.svg" %} alt="طلابي" class="logo-img">
+                <span class="logo-text">طلابي</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link{% if request.resolver_match.url_name == 'dashboard' %} active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>لوحة التحكم</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'students' %}" class="nav-link{% if request.resolver_match.url_name == 'students' %} active{% endif %}">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>الطلاب</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'groups' %}" class="nav-link{% if request.resolver_match.url_name == 'groups' %} active{% endif %}">
+                    <i class="fas fa-users"></i>
+                    <span>المجموعات</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'sessions' %}" class="nav-link{% if request.resolver_match.url_name == 'sessions' %} active{% endif %}">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>الحصص</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'payments' %}" class="nav-link {% if request.resolver_match.url_name == 'payments' %}active{% endif %}">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>المدفوعات</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- JavaScript for responsive sidebar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mediaQuery = window.matchMedia('(max-width: 1024px)');
+
+            // Function to handle sidebar toggle
+            function toggleSidebar() {
+                if (mediaQuery.matches) {
+                    // On mobile: toggle open class
+                    sidebar.classList.toggle('open');
+
+                    // Hide mobile menu button when sidebar is open
+                    if (sidebar.classList.contains('open')) {
+                        mobileMenuBtn.classList.add('hidden');
+                    } else {
+                        mobileMenuBtn.classList.remove('hidden');
+                    }
+                } else {
+                    // On desktop: toggle collapsed class
+                    sidebar.classList.toggle('collapsed');
+                }
+            }
+
+            // Add event listeners
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            mobileMenuBtn.addEventListener('click', toggleSidebar);
+
+            // Handle responsive behavior
+            function handleResponsiveLayout(e) {
+                if (e.matches) {
+                    // Mobile view
+                    sidebar.classList.remove('collapsed');
+                    sidebar.classList.remove('open');
+                    mobileMenuBtn.classList.remove('hidden');
+                } else {
+                    // Desktop view
+                    sidebar.classList.remove('open');
+                    mobileMenuBtn.classList.add('hidden');
+                }
+            }
+
+            // Initial setup
+            handleResponsiveLayout(mediaQuery);
+
+            // Listen for changes
+            mediaQuery.addEventListener('change', handleResponsiveLayout);
+
+            // Close sidebar when clicking on a link (mobile only)
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (mediaQuery.matches && sidebar.classList.contains('open')) {
+                        toggleSidebar();
+                    }
+                });
+            });
+        });
+    </script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

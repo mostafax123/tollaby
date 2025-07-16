@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Students Section -->
+<section id="students" class="content-section active">
+    <div class="section-header">
+        <h1>إدارة الطلاب</h1>
+        <a href="{% url 'add_student' %}" class="btn btn-primary" id="addStudentBtn" style="justify-self: flex-end" >
+            <i class="fas fa-plus"></i>
+            إضافة طالب جديد
+        </a>
+        <a href="{% url 'create_offer' %}" class="btn btn-secondary" id="addStudentBtn" >
+            <i class="fas fa-plus"></i>
+            إضافة نوع خصم
+        </a>
+    </div>
+    <!-- Students List -->
+    <div class="table-container">
+        <div class="table-wrapper">
+            <table class="data-table" id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الصف</th>
+                        <th>رقم الهاتف</th>
+                        <th>الجنس</th>
+                        <th>المجموعة</th>
+                        <th>الخصم</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.group__grade}}</td>
+                            <td>{{ student.phone_number }}</td>
+                            <td>{{ student.sex }}</td>
+                            <td>{{ student.group__name }}</td>
+                            <td>{{ student.offer__title }}</td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    <a href="{% url 'edit_student' student.id %}" class="btn btn-primary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <form action="{% url 'delete_student' student.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" id="deleteStudentBtn" >
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
