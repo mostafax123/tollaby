@@ -200,6 +200,7 @@ def payments_page(request):
     payments = Payment.objects.values(
         "student_id",
         "student__name",
+        "student__group__grade",
         "amount_due",
         "amount_paid",
         "last_payment"
@@ -223,7 +224,7 @@ def create_offer(request):
         name = request.POST.get("name")
         discount = request.POST.get("discount")
         Offer.objects.create(title=name, discount=discount)
-        return redirect('create_offer')
+        return redirect('students')
     return render(request, 'create_offer.html')
 
 def download_payments_csv(request):

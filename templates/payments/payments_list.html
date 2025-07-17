@@ -22,6 +22,7 @@
                 <thead>
                     <tr>
                         <th>الطالب</th>
+                        <th>الصف الدراسي</th>
                         <th>المبلغ المستحق</th>
                         <th>المبلغ المدفوع</th>
                         <th>المتبقي</th>
@@ -33,9 +34,10 @@
                     {% for payment in payments %}
                         <tr>
                             <td>{{ payment.student__name }}</td>
+                            <td>{{ payment.student__group__grade }}</td>
                             <td>{{ payment.amount_due }} ج.م</td>
                             <td>{{ payment.amount_paid }} ج.م</td>
-                            <td>{{ payment.amount_due|sub:payment.amount_paid }} ج.م</td>
+                            <td style="color: red;">{{ payment.amount_due|sub:payment.amount_paid }} ج.م</td>
                             <td>{{ payment.last_payment }} ج.م</td>
                             <td>
                                 <a href="{% url 'add_payment' payment.student_id %}" class="btn btn-success" id="addPaymentBtn">

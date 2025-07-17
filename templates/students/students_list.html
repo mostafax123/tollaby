@@ -4,17 +4,22 @@
 <section id="students" class="content-section active">
     <div class="section-header">
         <h1>إدارة الطلاب</h1>
-        <a href="{% url 'add_student' %}" class="btn btn-primary" id="addStudentBtn" style="justify-self: flex-end" >
-            <i class="fas fa-plus"></i>
-            إضافة طالب جديد
-        </a>
-        <a href="{% url 'create_offer' %}" class="btn btn-secondary" id="addStudentBtn" >
-            <i class="fas fa-plus"></i>
-            إضافة نوع خصم
-        </a>
+        <div class="filter-controls">
+                <a href="{% url 'add_student' %}" class="btn btn-primary" id="addStudentBtn" >
+                    <i class="fas fa-plus"></i>
+                    إضافة طالب جديد
+                </a>
+                <a href="{% url 'create_offer' %}" class="btn btn-secondary" id="addStudentBtn" >
+                    <i class="fas fa-plus"></i>
+                    إضافة نوع خصم
+                </a>
+        </div>
     </div>
     <!-- Students List -->
     <div class="table-container">
+        <div class="table-header">
+            <h3>قائمة الطلاب</h3>
+        </div>
         <div class="table-wrapper">
             <table class="data-table" id="studentsTable">
                 <thead>
